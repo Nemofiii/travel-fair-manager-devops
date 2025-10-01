@@ -27,12 +27,24 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// CORS configuration
+//CORS configuration
+const allowedOrigins = [
+  "http://localhost:8000",
+  "http://13.53.198.84:8000",   // your EC2 public IP frontend
+  "http://your-domain.com"      // add your domain later if you have one
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-  }),
+  })
 );
 
 // Body parsing middleware
