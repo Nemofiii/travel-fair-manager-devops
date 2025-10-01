@@ -1,0 +1,19 @@
+# Two services: backend API on 5005, frontend (nginx) on 8000
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    restart: always
+    env_file:
+      - ./backend/.env        
+    ports:
+      - "5005:5005"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - backend
