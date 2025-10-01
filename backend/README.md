@@ -1,4 +1,4 @@
-# Travel Log Backend API
+# Travel Fair Manager
 
 A Node.js/Express backend API for the Travel Log and Task Management application with MongoDB database integration.
 
