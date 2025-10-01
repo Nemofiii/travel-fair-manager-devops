@@ -52,6 +52,11 @@ jobs:
       - name: Checkout (optional)
         uses: actions/checkout@v4
 
+      - name: Debug network
+        run: |
+          ping -c 3 $EC2_HOST || true
+          nc -zv $EC2_HOST 22 || true
+          
       - name: Add EC2 host to known_hosts
         run: |
           mkdir -p ~/.ssh
