@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Download, Trash2, Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,17 +22,7 @@ export const MonthlyRecordsList = ({ refresh }: MonthlyRecordsListProps) => {
   const [selectedMonth, setSelectedMonth] = useState<string>("");
   const [records, setRecords] = useState<TravelRecord[]>([]);
 
-  useEffect(() => {
-    loadMonths();
-  }, [refresh]);
-
-  useEffect(() => {
-    if (selectedMonth) {
-      loadRecords(selectedMonth);
-    }
-  }, [selectedMonth, refresh]);
-
-  const loadMonths = async () => {
+  const loadMonths = useCallback(async () => {
     try {
       const availableMonths = await getAvailableMonths();
       setMonths(availableMonths);
@@ -47,9 +37,14 @@ export const MonthlyRecordsList = ({ refresh }: MonthlyRecordsListProps) => {
         variant: "destructive",
       });
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedMonth]);
 
-  const loadRecords = async (month: string) => {
+  useEffect(() => {
+    loadMonths();
+  }, [loadMonths, refresh]);
+
+  const loadRecords = useCallback(async (month: string) => {
     try {
       const monthRecords = await getRecordsByMonth(month);
       setRecords(monthRecords);
@@ -61,7 +56,15 @@ export const MonthlyRecordsList = ({ refresh }: MonthlyRecordsListProps) => {
         variant: "destructive",
       });
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (selectedMonth) {
+      loadRecords(selectedMonth);
+    }
+  }, [selectedMonth, refresh, loadRecords]);
+
+  
 
   const handleDelete = async (id: string) => {
     try {

@@ -35,14 +35,14 @@ export const getTaskDates = async (req, res) => {
 export const createTask = async (req, res) => {
   try {
     const { date, name, time } = req.body;
-    
+
     const task = new Task({
       date,
       name,
       time,
-      completed: false
+      completed: false,
     });
-    
+
     const savedTask = await task.save();
     res.status(201).json(savedTask);
   } catch (error) {
@@ -55,14 +55,14 @@ export const toggleTaskCompletion = async (req, res) => {
   try {
     const { id } = req.params;
     const task = await Task.findById(id);
-    
+
     if (!task) {
       return res.status(404).json({ message: 'Task not found' });
     }
-    
+
     task.completed = !task.completed;
     const updatedTask = await task.save();
-    
+
     res.json(updatedTask);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -74,11 +74,11 @@ export const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedTask = await Task.findByIdAndDelete(id);
-    
+
     if (!deletedTask) {
       return res.status(404).json({ message: 'Task not found' });
     }
-    
+
     res.json({ message: 'Task deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });

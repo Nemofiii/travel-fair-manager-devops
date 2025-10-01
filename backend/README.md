@@ -20,11 +20,13 @@ A Node.js/Express backend API for the Travel Log and Task Management application
 ## Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Create a `.env` file in the backend directory:
+
 ```env
 MONGODB_URI=mongodb://localhost:27017/travel-log
 PORT=5000
@@ -33,6 +35,7 @@ FRONTEND_URL=http://localhost:5173
 ```
 
 3. Start the server:
+
 ```bash
 # Development mode with auto-restart
 npm run dev
@@ -44,6 +47,7 @@ npm start
 ## API Endpoints
 
 ### Travel Records
+
 - `GET /api/travel-records` - Get all travel records
 - `GET /api/travel-records/months` - Get available months
 - `GET /api/travel-records/month/:month` - Get records by month
@@ -51,6 +55,7 @@ npm start
 - `DELETE /api/travel-records/:id` - Delete a travel record
 
 ### Tasks
+
 - `GET /api/tasks` - Get all tasks
 - `GET /api/tasks/dates` - Get all task dates
 - `GET /api/tasks/date/:date` - Get tasks by date
@@ -59,11 +64,13 @@ npm start
 - `DELETE /api/tasks/:id` - Delete a task
 
 ### Health Check
+
 - `GET /api/health` - Server health status
 
 ## Database Schema
 
 ### TravelRecord
+
 - `date` (String): Date of travel
 - `customerName` (String): Customer name
 - `distance` (Number): Distance traveled
@@ -74,6 +81,7 @@ npm start
 - `updatedAt` (Date): Record update timestamp
 
 ### Task
+
 - `date` (String): Task date
 - `name` (String): Task name
 - `time` (String): Task time

@@ -35,20 +35,20 @@ export const getAvailableMonths = async (req, res) => {
 export const createTravelRecord = async (req, res) => {
   try {
     const { date, customerName, distance, petrolAmount, totalFare } = req.body;
-    
+
     // Calculate month from date
     const dateObj = new Date(date);
     const month = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`;
-    
+
     const record = new TravelRecord({
       date,
       customerName,
       distance,
       petrolAmount,
       totalFare,
-      month
+      month,
     });
-    
+
     const savedRecord = await record.save();
     res.status(201).json(savedRecord);
   } catch (error) {
@@ -61,11 +61,11 @@ export const deleteTravelRecord = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedRecord = await TravelRecord.findByIdAndDelete(id);
-    
+
     if (!deletedRecord) {
       return res.status(404).json({ message: 'Travel record not found' });
     }
-    
+
     res.json({ message: 'Travel record deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
