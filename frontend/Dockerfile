@@ -14,4 +14,4 @@ ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
 EXPOSE 8000
-CMD [ "npm", "run", "preview", "--", "--port", "8000", "--host" ]
+CMD [ "npm", "run", "preview", "--", "--port", "8000", "--host", "0.0.0.0" ]
