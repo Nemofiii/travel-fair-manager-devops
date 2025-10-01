@@ -21,6 +21,7 @@ export const MonthlyRecordsList = ({ refresh }: MonthlyRecordsListProps) => {
   const [months, setMonths] = useState<string[]>([]);
   const [selectedMonth, setSelectedMonth] = useState<string>("");
   const [records, setRecords] = useState<TravelRecord[]>([]);
+  const name="Namrah";
 
   useEffect(() => {
     loadMonths();
