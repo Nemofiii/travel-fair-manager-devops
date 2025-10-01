@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Trash2, Calendar as CalendarIcon, Check, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,17 +22,7 @@ export const TasksList = ({ refresh }: TasksListProps) => {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  useEffect(() => {
-    loadDates();
-  }, [refresh]);
-
-  useEffect(() => {
-    if (selectedDate) {
-      loadTasks(selectedDate);
-    }
-  }, [selectedDate, refresh]);
-
-  const loadDates = async () => {
+  const loadDates = useCallback(async () => {
     try {
       const availableDates = await getTaskDates();
       setDates(availableDates);
@@ -47,9 +37,14 @@ export const TasksList = ({ refresh }: TasksListProps) => {
         variant: "destructive",
       });
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDate]);
 
-  const loadTasks = async (date: string) => {
+  useEffect(() => {
+    loadDates();
+  }, [loadDates, refresh]);
+
+  const loadTasks = useCallback(async (date: string) => {
     try {
       const dateTasks = await getTasksByDate(date);
       setTasks(dateTasks);
@@ -61,7 +56,14 @@ export const TasksList = ({ refresh }: TasksListProps) => {
         variant: "destructive",
       });
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (selectedDate) {
+      loadTasks(selectedDate);
+    }
+  }, [selectedDate, refresh, loadTasks]);
+
 
   const handleToggle = async (id: string) => {
     try {

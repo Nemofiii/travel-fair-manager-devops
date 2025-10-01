@@ -5,7 +5,7 @@ import {
   getTaskDates,
   createTask,
   toggleTaskCompletion,
-  deleteTask
+  deleteTask,
 } from '../controllers/taskController.js';
 
 const router = express.Router();

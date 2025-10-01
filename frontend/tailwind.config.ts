@@ -98,5 +98,6 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  // Avoid CommonJS require to satisfy @typescript-eslint/no-require-imports
+  plugins: [import("tailwindcss-animate") as unknown as never],
 } satisfies Config;

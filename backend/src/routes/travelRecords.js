@@ -4,7 +4,7 @@ import {
   getRecordsByMonth,
   getAvailableMonths,
   createTravelRecord,
-  deleteTravelRecord
+  deleteTravelRecord,
 } from '../controllers/travelRecordController.js';
 
 const router = express.Router();
